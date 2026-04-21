@@ -3,7 +3,7 @@
 import { sleep, Vec2 } from "@i18n";
 import { VisibleArea, LabelAttr, TextUIAttr, UI, registerUI, worldCanvas } from "./core";
 import { Sequencer } from "../action/sequencer";
-import { loadWorld } from "../game";
+import { loadWorld } from "../index";
 import { loadStageMapPage } from "../isometric/isometric";
 
 

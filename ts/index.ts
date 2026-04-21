@@ -18,19 +18,16 @@ import { initPopupMenus } from "./widget/menu";
 import { TreeNode, makeTreeNodeFromObject } from "./widget/tree";
 
 let urlOrigin : string;
+export let urlBase : string;
 export let isDev : boolean = false;
 let worldData : JsonData;
 
-document.addEventListener('DOMContentLoaded', async () => {
-    await asyncBodyOnLoad();
-});  
-
-async function asyncBodyOnLoad(){
+export async function initGame(){
     msg("loaded");
     let pathname  : string;
     let params = new Map<string, string>();
 
-    [ urlOrigin, pathname, params, ] = parseURL();
+    [ urlOrigin, pathname, params, urlBase ] = parseURL();
     msg(`origin:[${urlOrigin}] path:[${pathname}]`);
 
     for (const [key, value] of params.entries()) {

@@ -2,6 +2,7 @@
 
 import { msg, Vec2 } from "@i18n";
 import { VisibleArea, UI, UIAttr, registerUI, worldCanvas } from "./core";
+import { urlBase } from "..";
 
 export const imageMap = new Map<string, HTMLImageElement>();
 
@@ -64,7 +65,7 @@ export function addImage(image_file : string){
 
     const image = new Image();
     // Set the path to your image file
-    image.src = `../plane/images/${image_file}`;    
+    image.src = `${urlBase}/images/${image_file}`;    
     image.onload = ()=>{
         imageMap.set(image_file, image);
         worldCanvas.requestUpdateCanvas();

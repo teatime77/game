@@ -20,6 +20,7 @@ import { TreeNode, makeTreeNodeFromObject } from "./widget/tree";
 let urlOrigin : string;
 export let urlBase : string;
 export let isDev : boolean = false;
+export let basePath : string = ".";
 let worldData : JsonData;
 
 export async function initGame(){
@@ -28,6 +29,9 @@ export async function initGame(){
     let params = new Map<string, string>();
 
     [ urlOrigin, pathname, params, urlBase ] = parseURL();
+    if (pathname.includes("diagram")) {
+        urlBase = "../game";
+    }
     msg(`origin:[${urlOrigin}] path:[${pathname}]`);
 
     for (const [key, value] of params.entries()) {
@@ -42,11 +46,14 @@ export async function initGame(){
 
     setCanvas(new Canvas($("world-game") as HTMLCanvasElement))
 
+    const isDiagram = pathname.includes("diagram");
+    basePath = isDiagram ? "../game" : ".";
+
     if(isDev){
-        worldData   = await fetchJson(`data/dev.json?id=${Math.random()}`);
+        worldData   = await fetchJson(`${basePath}/data/dev.json?id=${Math.random()}`);
     }
     else{
-        worldData   = await fetchJson(`data/prod.json?id=${Math.random()}`);
+        worldData   = await fetchJson(`${basePath}/data/prod.json?id=${Math.random()}`);
     }
 
     if(worldData.target == undefined){
@@ -57,7 +64,7 @@ export async function initGame(){
     // dumpObj(canvas, 0, new Set<any>());
     testEx();
 
-    const map = await fetchJson(`data/map.json?id=${Math.random()}`);
+    const map = await fetchJson(`${basePath}/data/map.json?id=${Math.random()}`);
     initIsometric(worldCanvas, map);
     worldCanvas.isReady = true;
 }

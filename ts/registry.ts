@@ -44,8 +44,8 @@ export class SymbolRef {
 
         let data : JsonData | undefined = importedJsons.get(path);
         if(data == undefined){
-
-            data = await fetchJson(`data/${path}.json?id=${Math.random()}`) as JsonData;
+            const { basePath } = await import("./index");
+            data = await fetchJson(`${basePath}/data/${path}.json?id=${Math.random()}`) as JsonData;
             importedJsons.set(path, data);
             // msg(`lib:${url}\n ${JSON.stringify(data, null, 4)}`);
         }

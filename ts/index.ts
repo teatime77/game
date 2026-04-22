@@ -40,7 +40,7 @@ export async function initGame(){
 
     initSpeech();
 
-    setCanvas(new Canvas($("world") as HTMLCanvasElement))
+    setCanvas(new Canvas($("world-game") as HTMLCanvasElement))
 
     if(isDev){
         worldData   = await fetchJson(`data/dev.json?id=${Math.random()}`);
@@ -107,3 +107,15 @@ export async function loadWorld(target : string){
 }
 export { worldCanvas };
 
+import { sleep } from "@i18n";
+
+export async function playGameWorld(target: string, stopCallback: () => boolean) {
+    await loadWorld(target);
+    Sequencer.start();
+
+    // シーケンサーが終了する、またはdiagram側からstopフラグが立つまで待機
+    while (Sequencer.rootParallelAction && !Sequencer.rootParallelAction.finished) {
+        if (stopCallback()) break;
+        await sleep(100);
+    }
+}

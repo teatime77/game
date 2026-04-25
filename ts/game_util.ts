@@ -1,17 +1,5 @@
-import { fetchTextResponse, msg, MyError, Vec2 } from "@i18n";
+import { msg, MyError, Vec2 } from "@i18n";
 import { UI, worldCanvas } from "./widget/core";
-
-export async function fetchJson(url : string) {
-    const resp = await fetchTextResponse(url);
-    if(resp instanceof Response){
-        msg(`fetch json error:${resp.statusText}`);
-        throw new MyError();
-    }
-    else{
-        const obj  = JSON.parse(resp);
-        return obj;
-    }
-}
 
 export function getDocumentSize() : Vec2 {
     const document_width  = document.documentElement.clientWidth;

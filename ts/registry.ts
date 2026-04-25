@@ -1,6 +1,5 @@
-import { MyError, Vec2 } from "@i18n";
+import { MyError, Vec2, fetchJson } from "@i18n";
 import { registerUI, UI, UIAttr, makeUIFromJSON, makeActionFromJSON } from "./widget/core";
-import { fetchJson } from "./game_util";
 
 import type { PopupMenu } from "./widget/menu";
 import type { Action } from "./action/action";

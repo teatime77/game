@@ -1,4 +1,4 @@
-import { msg, MyError, $, parseURL } from "@i18n";
+import { msg, MyError, $, fetchJson, parseURL } from "@i18n";
 import './widget/container';
 import './widget/slider';
 import './widget/scroll_view';
@@ -7,7 +7,7 @@ import './action/speech';
 
 import { initSpeech } from "./action/speech";
 import { Sequencer } from "./action/sequencer";
-import { fetchJson, getUIFromId } from "./game_util";
+import { getUIFromId } from "./game_util";
 import { initIsometric, clearIsometric } from "./isometric/isometric";
 import { testEx } from "./lesson/exercise";
 import { ArithmeticView, termToUIs } from "./math/arithmetic/arithmetic";

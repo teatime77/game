@@ -1,6 +1,7 @@
 ///<reference path="core.ts" />
 
 import { MyError, msg, remove, Vec2 } from "@i18n";
+import { AbstractCanvas } from "@plane";
 import { Sequencer } from "../action/sequencer";
 import { getDocumentSize } from "../game_util";
 import { drawIsometric } from "../isometric/isometric";
@@ -29,54 +30,26 @@ function isTransparent(ctx : CanvasRenderingContext2D, position : Vec2) {
     }
 }
 
-export class Canvas {
-    canvas : HTMLCanvasElement;
-    ctx : CanvasRenderingContext2D;
-
+export class Canvas extends AbstractCanvas {
     isReady : boolean = false;
 
     private uis: UI[] = [];
 
     isIsometric : boolean = false;
 
-    pointerId : number = NaN;
-
-    downPos  : Vec2 = Vec2.zero();
-    movePos  : Vec2 = Vec2.zero();
-    uiOrgPos : Vec2 = Vec2.zero();
-
-    moved : boolean = false;
-
     constructor(canvas_html : HTMLCanvasElement){
-        this.canvas = canvas_html;
-
+        super(canvas_html);
         const rect = this.canvas.getBoundingClientRect();
         this.canvas.width  = rect.width;
         this.canvas.height = rect.height;
 
-
-        this.ctx = this.canvas.getContext('2d')!; // Or 'webgl', 'webgl2'
-        if (!this.ctx) {
-            console.error("Canvas context not supported!");
-        }
-
-        this.canvas.addEventListener("pointerdown",  this.pointerdown.bind(this));
-        this.canvas.addEventListener("pointermove",  this.pointermove.bind(this));
-        
-        this.canvas.addEventListener("pointerup"  , async (ev:PointerEvent)=>{
-            await this.pointerup(ev);
-        });
-
         this.canvas.addEventListener("contextmenu", this.contextmenu.bind(this));
-
         this.canvas.addEventListener('keydown', this.keydown.bind(this));
-
-
 
         msg(`canvas w:${canvas_html.width} h:${canvas_html.height}`);
     }
 
-    clearUIs(){
+    clearCanvas() : void {
         this.uis = [];
     }
 
@@ -101,7 +74,7 @@ export class Canvas {
         uis.slice().forEach(x => remove(this.uis, x))
     }
 
-    getPositionInCanvas(event : PointerEvent) : Vec2 {
+    getPositionInCanvas(event : MouseEvent) : Vec2 {
         // Get the bounding rectangle of the canvas
         const rect = this.canvas.getBoundingClientRect();
 
@@ -140,7 +113,7 @@ export class Canvas {
         target.setPosition(ui_new_pos);
     }
 
-    pointerdown(ev:PointerEvent){
+    pointerdown(ev:PointerEvent) : void {
         this.moved = false;
 
         const pos = this.getPositionInCanvas(ev);
@@ -159,7 +132,7 @@ export class Canvas {
         }
     }
 
-    pointermove(ev:PointerEvent){
+    pointermove(ev:PointerEvent) : void {
 
         if(targetUI == undefined || !(targetUI instanceof Thumb)){
             return;
@@ -200,7 +173,7 @@ export class Canvas {
         }        
     }
 
-    async pointerup(ev:PointerEvent){
+    async pointerup(ev:PointerEvent) : Promise<void> {
         if(targetUI == undefined){
             return;
         }
@@ -275,9 +248,7 @@ export class Canvas {
         }
     }
 
-
-
-    resizeCanvas() {
+    resizeCanvas() : void {
         // Set the canvas's internal drawing dimensions to match its display size
         // window.innerWidth/Height give the viewport dimensions.
         this.canvas.width  = window.innerWidth;
@@ -297,7 +268,7 @@ export class Canvas {
         this.requestUpdateCanvas();
     }
 
-    repaint(){
+    repaint() : void {
         if(this.isIsometric){
             this.ctx.save();
             this.ctx.fillStyle = "darkslategray"; // "DarkBlue"; DarkSlateBlue Teal  // "";    // "DeepSkyBlue"; //skyblue

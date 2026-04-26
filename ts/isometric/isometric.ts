@@ -125,7 +125,7 @@ function makeUpDownButton(){
 
 export function loadStageMapPage(){
     worldCanvas.isIsometric = true;
-    worldCanvas.clearUIs();
+    worldCanvas.clearCanvas();
     // worldCanvas.removeUIs(...houseImages, ...lessonLabels)
     houseImages = [];
     lessonLabels = [];

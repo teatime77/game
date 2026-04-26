@@ -78,7 +78,7 @@ export async function loadWorld(target : string){
     worldCanvas.isReady = false;
 
     SymbolRef.clearSymbolMap();
-    canvas.clearUIs();
+    canvas.clearCanvas();
     ArithmeticView.arithmeticViews = [];
     termToUIs.clear();
 

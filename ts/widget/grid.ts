@@ -133,7 +133,7 @@ export class Grid extends ContainerUI {
             }
             else if(col == "*"){
                 const col_children = this.children.filter(x => x.colIdx == col_idx && x.getColSpan() == 1);
-                pix_columns[col_idx] = Math.max(...col_children.map(x => x.minSize.x));
+                pix_columns[col_idx] = col_children.length > 0 ? Math.max(...col_children.map(x => x.minSize.x)) : 0;
             }
         }
 
@@ -149,7 +149,7 @@ export class Grid extends ContainerUI {
             }
             else if(row == "*"){
                 const row_children = this.children.filter(x => x.rowIdx == row_idx && x.getRowSpan() == 1);
-                pix_rows[row_idx] = Math.max(...row_children.map(x => x.minSize.y));
+                pix_rows[row_idx] = row_children.length > 0 ? Math.max(...row_children.map(x => x.minSize.y)) : 0;
             }
         }
 

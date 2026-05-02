@@ -14,7 +14,7 @@ function makeTermFromObjs(... objs : any[]) : Term[] {
     throw objs.map(x => makeTermFromObj(x));
 }
 
-abstract class RuntimeFunction {
+export abstract class RuntimeFunction {
     constructor(data : any){        
     }
 
@@ -40,6 +40,7 @@ class randomInt extends RuntimeFunction {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 }
+
 
 class Range extends RuntimeFunction {
     min : Term;
@@ -113,7 +114,7 @@ class FilterFunction extends RuntimeFunction {
     }
 }
 
-abstract class LogicalExpression extends RuntimeFunction {
+export abstract class LogicalExpression extends RuntimeFunction {
     apply(... args:ValueType[]) : boolean {
         throw new MyError();
     }

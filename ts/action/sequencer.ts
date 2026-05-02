@@ -2,7 +2,7 @@ import { remove, msg } from "@i18n";
 import { makeActionFromJSON, registerAction, worldCanvas } from "../widget/core";
 import { Action, ActionAttr } from "./action";
 
-abstract class CompositeAction extends Action {
+export abstract class CompositeAction extends Action {
     actions : Action[] = [];
 
     constructor(data : ActionAttr & {actions : any[]}){
